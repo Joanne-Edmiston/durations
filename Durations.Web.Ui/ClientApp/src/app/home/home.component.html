@@ -1,0 +1,7 @@
+<h1>My Time</h1>
+
+<div *ngFor="let duration of startedDurations">
+  <app-duration-recorder [duration]="duration"></app-duration-recorder>
+</div>
+
+<button (click)="onStartNew()">Start New Activity</button>

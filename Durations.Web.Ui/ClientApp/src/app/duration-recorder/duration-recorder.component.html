@@ -1,0 +1,43 @@
+<div>
+
+  <h4>Record Activity</h4>
+
+  <div *ngIf="!this.duration.started">
+    <button (click)="onStart()">Start</button>
+  </div>
+
+  <div *ngIf="this.duration.started">
+    <p><span>Started at:</span> {{ duration.started | date: 'HH:mm:ss' }}</p>
+    <p *ngIf="this.duration.ended"><span>Ended at:</span> {{ duration.ended | date: 'HH:mm:ss' }}</p>
+    <p><span>Recorded Time:</span> {{ duration.prettyDuration }}</p>
+
+  </div>
+
+
+
+  <div *ngIf="!this.duration.ended">
+
+    <div *ngIf="this.isPaused">
+      <p><span>Paused at:</span> {{ lastPaused | date: 'HH:mm:ss' }}</p>
+    </div>
+
+    <div *ngIf="this.duration.started && !this.isPaused">
+      <button (click)="onPause()">Pause</button>
+    </div>
+
+    <div *ngIf="this.isPaused && !this.duration.ended">
+      <button (click)="onResume()">Resume</button>
+    </div>
+
+    <div *ngIf="this.duration.started">
+      <button (click)="onStop()">Stop</button>
+    </div>
+
+  </div>
+
+  <div *ngIf="this.duration.ended">
+
+    <p>Choose an Activity to add time against or create a new activity</p>
+  </div>
+</div>
+<br />
