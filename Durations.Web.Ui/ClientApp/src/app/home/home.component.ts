@@ -16,6 +16,10 @@ export class HomeComponent  implements OnInit {
     this.startedDurations.push(new Duration());
   }
 
+  onCancelled(duration: Duration) {
+   this.startedDurations = this.startedDurations.filter(d => d !== duration);
+  }
+
   ngOnInit() {
 
     // TODO: show started durations not assigned to activites?

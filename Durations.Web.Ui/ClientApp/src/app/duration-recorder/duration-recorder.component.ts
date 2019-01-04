@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Duration } from '../model/duration.model';
 
 @Component({
@@ -12,6 +12,7 @@ export class DurationRecorderComponent implements OnInit {
   constructor() { }
 
   @Input() duration: Duration;
+  @Output() cancel: EventEmitter<Duration> = new EventEmitter();
   durationRecordedUntil: Date;
   lastPaused: Date;
   isPaused: boolean;
@@ -43,6 +44,13 @@ export class DurationRecorderComponent implements OnInit {
 
     this.onPause();
     this.duration.ended = new Date();
+  }
+
+  onCancel() {
+
+    this.onStop();
+
+    this.cancel.emit(this.duration);
   }
 
   ngOnInit() {

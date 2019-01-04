@@ -4,7 +4,7 @@
 </p>
 <div class="row">
     <div class="col-md-6 col-sm-12" *ngFor="let duration of startedDurations">
-        <app-duration-recorder [duration]="duration"></app-duration-recorder>
+        <app-duration-recorder [duration]="duration" (cancel)="onCancelled($event)"></app-duration-recorder>
       </div>
 </div>
 
