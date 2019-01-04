@@ -1,7 +1,18 @@
-<h1>My Time</h1>
 
-<div *ngFor="let duration of startedDurations">
-  <app-duration-recorder [duration]="duration"></app-duration-recorder>
+<p *ngIf="!startedDurations.length">
+  Click "Start New Activity" button to begin recording a new activity
+</p>
+<div class="row">
+    <div class="col-md-6 col-sm-12" *ngFor="let duration of startedDurations">
+        <app-duration-recorder [duration]="duration"></app-duration-recorder>
+      </div>
 </div>
 
-<button (click)="onStartNew()">Start New Activity</button>
+
+<div class="row">
+  <div class="col-sm">
+    <button class="btn btn-secondary" (click)="onStartNew()">
+        <i class="fa fa-play-circle-o"></i>  Start New Activity
+      </button>
+    </div>
+  </div>

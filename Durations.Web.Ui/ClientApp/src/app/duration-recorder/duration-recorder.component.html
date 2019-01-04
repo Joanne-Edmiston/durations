@@ -1,43 +1,63 @@
-<div>
+<div class="card">
+  <div class="card-body">
 
-  <h4>Record Activity</h4>
+    <h3 class="text-primary" *ngIf="this.duration.started">{{ this.duration.title }} <span class="badge badge-primary pull-right">{{ duration.prettyDuration }}</span> </h3>
+    <p *ngIf="this.isPaused && !this.duration.ended" class="alert alert-warning">
+      <span>Paused at: {{ duration.started | date: 'HH:mm:ss' }}</span>
+    </p>
 
-  <div *ngIf="!this.duration.started">
-    <button (click)="onStart()">Start</button>
-  </div>
-
-  <div *ngIf="this.duration.started">
-    <p><span>Started at:</span> {{ duration.started | date: 'HH:mm:ss' }}</p>
-    <p *ngIf="this.duration.ended"><span>Ended at:</span> {{ duration.ended | date: 'HH:mm:ss' }}</p>
-    <p><span>Recorded Time:</span> {{ duration.prettyDuration }}</p>
-
-  </div>
-
-
-
-  <div *ngIf="!this.duration.ended">
-
-    <div *ngIf="this.isPaused">
-      <p><span>Paused at:</span> {{ lastPaused | date: 'HH:mm:ss' }}</p>
+    <div class="form-group" *ngIf="!this.duration.started">
+      <input
+        [(ngModel)]="duration.title"
+        [readonly]="this.duration.started" type="text" class="form-control" id="title" aria-describedby="titleHelp" placeholder="Enter title for the activity">
+      <small id="titleHelp" class="form-text text-muted">A title is needed before the activity can be started.</small>
     </div>
 
-    <div *ngIf="this.duration.started && !this.isPaused">
-      <button (click)="onPause()">Pause</button>
+    <div class="row">
+      <div class="col-sm-12">
+        <div>
+          <button *ngIf="!this.duration.started"
+                  (click)="onStart()"
+                  [disabled]="!this.duration.title"
+                  type="button"
+                  class="btn btn-outline-secondary">
+            <i class="fa fa-play"></i> Start
+          </button>
+          <button *ngIf="this.duration.started"
+                  [disabled]="!this.isPaused || this.duration.ended"
+                  (click)="onResume()"
+                  type="button"
+                  class="btn btn-outline-secondary">
+            <i class="fa fa-play"></i> Resume
+          </button>
+          <button [disabled]="this.isPaused || this.duration.ended"
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  (click)="onPause()">
+            <i class="fa fa-pause"></i> Pause
+          </button>
+          <button [disabled]="this.duration.ended"
+                  (click)="onStop()"
+                  type="button"
+                  class="btn btn-outline-secondary">
+            <i class="fa fa-stop"></i> Stop
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div *ngIf="this.isPaused && !this.duration.ended">
-      <button (click)="onResume()">Resume</button>
-    </div>
 
-    <div *ngIf="this.duration.started">
-      <button (click)="onStop()">Stop</button>
-    </div>
+    <br />
+
+
+    <p *ngIf="this.duration.started">
+      <em><b>started: </b>{{ duration.started | date: 'HH:mm:ss' }}</em>
+      <span *ngIf="this.duration.ended"><em>, <b>ended: </b>{{ duration.ended | date: 'HH:mm:ss' }}</em></span>
+    </p>
+
 
   </div>
 
-  <div *ngIf="this.duration.ended">
 
-    <p>Choose an Activity to add time against or create a new activity</p>
-  </div>
 </div>
 <br />

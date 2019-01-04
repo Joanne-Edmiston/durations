@@ -12,14 +12,14 @@ export class DurationRecorderComponent implements OnInit {
   constructor() { }
 
   @Input() duration: Duration;
-  lastResumed: Date;
+  durationRecordedUntil: Date;
   lastPaused: Date;
   isPaused: boolean;
   private timer;
 
   onResume() {
     this.isPaused = false;
-    this.lastResumed = new Date();
+    this.durationRecordedUntil = new Date();
 
     this.timer = setInterval(() => {
       this.updateDuration();
@@ -28,7 +28,7 @@ export class DurationRecorderComponent implements OnInit {
 
   onStart() {
     this.onResume();
-    this.duration.started = this.lastResumed;
+    this.duration.started = this.durationRecordedUntil;
   }
 
   onPause() {
@@ -54,7 +54,9 @@ export class DurationRecorderComponent implements OnInit {
   private updateDuration() {
     const now = new Date();
     this.duration.milliSeconds = this.duration.milliSeconds +
-       Math.abs((now.getTime() - this.lastResumed.getTime()));
+       Math.abs((now.getTime() - this.durationRecordedUntil.getTime()));
+
+       this.durationRecordedUntil = new Date();
   }
 
 }
